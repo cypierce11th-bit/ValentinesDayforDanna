@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Valentine's Day ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: #ffe6ec;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #ff4d6d;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #ff4d6d;
+      margin-bottom: 20px;
+    }
+
+    p, .question {
+      font-size: 1.2rem;
+      color: #444;
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+
+    .heart-btn, .answer-btn, .music-btn {
+      background: #ff4d6d;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin: 8px;
+      transition: 0.3s ease;
+    }
+
+    .heart-btn:hover, .answer-btn:hover, .music-btn:hover {
+      background: #e63956;
+      transform: scale(1.05);
+    }
+
+    .love-meter {
+      width: 80%;
+      height: 20px;
+      background: #ffd1dc;
+      border-radius: 20px;
+      margin: 20px auto;
+      overflow: hidden;
+      border: 2px solid #ff4d6d;
+    }
+
+    .love-fill {
+      height: 100%;
+      width: 0%;
+      background: #ff4d6d;
+      transition: width 0.5s ease;
+    }
+
+    #explosion span {
+      position: absolute;
+      font-size: 2rem;
+      animation: explode 1.2s ease-out forwards;
+    }
+
+    @keyframes explode {
+      0% { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--x), var(--y)) scale(0.2); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" src="si_somos_novios.mp3"></audio>
+
+  <div class="container">
+    <button class="music-btn" onclick="playMusic()">Play Music 🎵</button>
+
+    <h1>Happy Valentine's Day ❤️</h1>
+    <h2>Danna Cruz ❤️</h2>
+    <p>You mean the world to me. I made this little page just for you — because you deserve something cute today.</p>
+
+    <button class="heart-btn" onclick="startTrivia()">Click for a surprise 💘</button>
+
+    <div id="trivia" style="display:none;">
+      <div class="love-meter"><div id="loveFill" class="love-fill"></div></div>
+      <div id="questionBox"></div>
+      <div id="answers"></div>
+      <div id="feedback" class="hearts"></div>
+      <div id="explosion"></div>
+    </div>
+  </div>
+
+  <script>
+    let step = 0;
+    let loveProgress = 0;
+
+    const questions = [
+      {
+        q: "Where did we meet?",
+        answers: ["The gym", "Three Brothers", "Applebee's"],
+        correct: 0
+      },
+      {
+        q: "What did I get you for our first Valentine's Day?",
+        answers: ["Necklace with our birthstones", "Weighted Bunny", "This dick"],
+        correct: 0
+      },
+      {
+        q: "Will you be my Valentine this year?",
+        answers: ["Yes", "No"],
+        correct: 0
+      }
+    ];
+
+    function playMusic() {
+      const music = document.getElementById('bgMusic');
+      music.volume = 0.5;
+      music.play().catch(() => {});
+      document.querySelector('.music-btn').style.display = 'none';
+    }
+
+    function startTrivia() {
+      document.getElementById('trivia').style.display = 'block';
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      document.getElementById('feedback').innerHTML = "";
+
+      const current = questions[step];
+      document.getElementById('questionBox').innerHTML = `<p class='question'>${current.q}</p>`;
+
+      const ansBox = document.getElementById('answers');
+      ansBox.innerHTML = "";
+      current.answers.forEach((answer, index) => {
+        ansBox.innerHTML += `<button class='answer-btn' onclick='checkAnswer(${index})'>${answer}</button>`;
+      });
+    }
+
+    function explodeHearts() {
+      const explosion = document.getElementById('explosion');
+      explosion.innerHTML = "";
+
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('span');
+        heart.textContent = "💖";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.position = "absolute";
+        heart.style.setProperty('--x', `${(Math.random() - 0.5) * 350}px`);
+        heart.style.setProperty('--y', `${(Math.random() - 0.5) * 350}px`);
+        explosion.appendChild(heart);
+      }
+    }
+
+    function explodeFinalHearts() {
+      const explosion = document.getElementById('explosion');
+      explosion.innerHTML = "";
+
+      for (let i = 0; i < 120; i++) {
+        const heart = document.createElement('span');
+        heart.textContent = "💘";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = Math.random() * window.innerHeight + "px";
+        heart.style.position = "fixed";
+        heart.style.setProperty('--x', `${(Math.random() - 0.5) * 800}px`);
+        heart.style.setProperty('--y', `${(Math.random() - 0.5) * 800}px`);
+        heart.style.animationDuration = (1 + Math.random() * 1.5) + "s";
+        explosion.appendChild(heart);
+      }
+    }
+
+    function increaseLoveMeter() {
+      loveProgress += 34;
+      if (loveProgress > 100) loveProgress = 100;
+      document.getElementById('loveFill').style.width = loveProgress + "%";
+    }
+
+    function checkAnswer(index) {
+      const feedback = document.getElementById('feedback');
+
+      if (index === questions[step].correct) {
+        feedback.innerHTML = "💖 Correct! 💖";
+        increaseLoveMeter();
+        explodeHearts();
+
+        if (step === questions.length - 1) {
+          setTimeout(() => {
+            feedback.innerHTML = "<h2>I love you and miss you, Danna Cruz ❤️</h2>";
+          }, 1000);
+          explodeFinalHearts();
+          return;
+        }
+
+        step++;
+        setTimeout(loadQuestion, 1200);
+      } else {
+        feedback.innerHTML = "❌ Try again, my love";
+      }
+    }
+  </script>
+</body>
+</html>
