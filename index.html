@@ -9,7 +9,241 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffe6ec 0%, #ffc1cf 100%);
+      background-attachment: fixed;
+      text-align: center;
+      overflow-x: hidden;
+      color: #444;
+    }
+
+    /* --- MAIN CONTAINER --- */
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 20px auto; /* Reduced from 40px for mobile spacing */
+      padding: 30px 15px; /* Tighter padding for mobile */
+      background: rgba(255, 255, 255, 0.4); 
+      backdrop-filter: blur(8px);
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 8vw, 3.5rem); /* Slightly smaller start for small screens */
+      color: #ff3f63;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: #ff7a90;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #ff4d6d;
+    }
+
+    /* --- BUTTONS --- */
+    .heart-btn, .answer-btn, .music-btn {
+      background: #ff4d6d;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin: 8px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 6px 15px rgba(255, 77, 109, 0.3);
+      max-width: 100%;
+    }
+
+    .heart-btn:hover, .answer-btn:hover, .music-btn:hover {
+      background: #e63956;
+      transform: scale(1.05) translateY(-2px);
+    }
+
+    /* --- LOVE METER --- */
+    .love-meter {
+      width: 90%;
+      height: 20px;
+      background: white;
+      border-radius: 20px;
+      margin: 20px auto;
+      overflow: hidden;
+      border: 3px solid #ff8fab;
+    }
+
+    .love-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff4d6d, #ff8fab);
+      transition: width 0.8s ease-out;
+    }
+
+    /* --- POLAROID GALLERY --- */
+    .polaroid-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px; /* Reduced gap for mobile */
+      margin-top: 40px;
+    }
+
+    .polaroid {
+      width: 140px; /* Scaled down for mobile */
+      padding: 10px 10px 20px 10px;
+      background: white;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transform: rotate(var(--rotation));
+      transition: 0.3s;
+    }
+
+    .polaroid:hover {
+      transform: scale(1.1) rotate(0deg) !important;
+      z-index: 10;
+    }
+
+    .polaroid img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border: 1px solid #eee;
+    }
+
+    .polaroid span {
+      display: block;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.1rem;
+      margin-top: 8px;
+      color: #ff4d6d;
+    }
+
+    /* --- DECORATIONS --- */
+    .side-img {
+      position: fixed;
+      top: 50%;
+      width: 80px; /* Smaller hearts */
+      opacity: 0.8;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .left { left: -10px; transform: rotate(15deg); }
+    .right { right: -10px; transform: rotate(-15deg); }
+
+    .quote {
+      position: fixed;
+      bottom: 20px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1rem;
+      color: #ff4d6d;
+      background: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      z-index: 5;
+    }
+    .left-quote { left: 10px; }
+    .right-quote { right: 10px; }
+
+    /* --- INTRO SCREEN --- */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: #ffe6ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      animation: fadeOut 1s ease forwards 9s;
+    }
+
+    .intro-text {
+      font-size: 1.5rem;
+      color: #ff4d6d;
+      border-right: 3px solid #ff4d6d;
+      padding: 0 10px;
+      animation: blink 0.7s infinite;
+      text-align: center;
+    }
+
+    @keyframes blink { 50% { border-color: transparent; } }
+    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+    /* --- JAR & BUCKET LIST --- */
+    .jar-icon {
+      font-size: 4rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .reason-text {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.2rem;
+      color: #ff4d6d;
+      min-height: 60px;
+      padding: 15px;
+      background: white;
+      border-radius: 15px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .list-items {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      display: inline-block;
+    }
+    .list-items li {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+    }
+    .list-items input[type="checkbox"] {
+      margin-right: 10px;
+      min-width: 18px;
+      min-height: 18px;
+    }
+
+    /* HEART EXPLOSION */
+    .floating-heart {
+      position: fixed;
+      font-size: 1.5rem;
+      z-index: 999;
+      pointer-events: none;
+      animation: explode 1.2s ease-out forwards;
+    }
+    @keyframes explode {
+      0% { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--x), var(--y)) scale(0) rotate(360deg); opacity: 0; }
+    }
+
+    /* --- MOBILE SPECIFIC FIXES --- */
+    @media (max-width: 600px) {
+      .side-img { display: none; } /* Hide floating hearts to clear space */
+      .quote { 
+        position: relative; 
+        display: block; 
+        width: fit-content; 
+        margin: 10px auto; 
+        bottom: auto; left: auto; right: auto;
+      }
+      .container { width: 92%; margin: 10px auto; }
+      .polaroid { width: 120px; }
+      .answer-btn { width: 100%; margin: 5px 0; }
+    }
+  </style>
 </head>
 <body>
 
@@ -53,6 +287,27 @@
   </div>
 </div>
 
+<div class="container jar-section">
+  <h3>Reasons Why I Adore You ❤️</h3>
+  <p>Whenever you're feeling down, click the jar to get a little reminder of why you're my favorite person.</p>
+  <div class="jar-container">
+    <div id="reason-display" class="reason-text">Click the jar to see...</div>
+    <div class="jar-icon" onclick="getNewReason()">🫙</div>
+  </div>
+</div>
+
+<div class="container bucket-list">
+  <h3>Our "When I See You" List ✈️</h3>
+  <p>Things I can't wait to do with you...</p>
+  <ul class="list-items">
+    <li><input type="checkbox"> A long, long hug to make up for lost time.</li>
+    <li><input type="checkbox"> Watching our show cuddled up</li>
+    <li><input type="checkbox"> Letting you clear all my blackheads (if you want to also my ear! lol).</li>
+    <li><input type="checkbox"> A Cava, WaWa, Tacobell, Sushi, and Cheesecake date </li>
+    <li><input type="checkbox"> Taking you wherever and doing whatever you want</li>
+  </ul>
+</div>
+
 <script>
   let step = 0;
   let loveProgress = 0;
@@ -65,7 +320,6 @@
     { q: "Danna Cruz, will you be my Valentine?", answers: ["Yes!", "YES!!"], correct: 0 }
   ];
 
-  // Randomize polaroid rotations for a "cuter" look
   document.querySelectorAll('.polaroid').forEach(p => {
     const randomRot = Math.floor(Math.random() * 10) - 5; 
     p.style.setProperty('--rotation', `${randomRot}deg`);
@@ -98,7 +352,6 @@
 
   function checkAnswer(index) {
     const feedback = document.getElementById('feedback');
-    // For the last 3 questions, any answer is "correct" because it's sweet!
     if (index === questions[step].correct || step >= 2) {
       feedback.innerHTML = "<span style='color:#ff4d6d'>💖 Correct! 💖</span>";
       increaseLoveMeter();
@@ -139,7 +392,6 @@
     }
   }
 
-  // Typewriter
   const message = ["Hi Danna…", "I made something special for you.", "Because even from afar...", "I wanted to make you smile. 💖"];
   let i = 0, j = 0;
   function typeWriter() {
@@ -150,6 +402,32 @@
     }
   }
   window.onload = typeWriter;
+
+  const reasons = [
+    "Your laugh—it's my favorite sound in the world.",
+    "How much you love the small things and your toys.",
+    "Your sudden excitement and those 'love attacks' you give.",
+    "Your smart, witty mind that always keeps me on my toes.",
+    "How incredibly passionate and caring you are.",
+    "That specific face you make when you want to be babied 🥺",
+    "How beautiful you look in your hair wrap.",
+    "How naturally gorgeous you are without a drop of makeup.",
+    "The focused look you get when you want to get blackheads out!",
+    "The pure joy on your face every time you see a cute dog."
+  ];
+
+  function getNewReason() {
+    const reasonBox = document.getElementById('reason-display');
+    const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
+    reasonBox.style.opacity = 0;
+    document.querySelector('.jar-icon').style.transform = "rotate(15deg)";
+    setTimeout(() => {
+      reasonBox.innerText = randomReason;
+      reasonBox.style.opacity = 1;
+      document.querySelector('.jar-icon').style.transform = "rotate(0deg)";
+    }, 300);
+  }
 </script>
+
 </body>
 </html>

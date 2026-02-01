@@ -1,5 +1,3 @@
-styles.css
-
 body {
   margin: 0;
   padding: 0;
@@ -13,10 +11,11 @@ body {
 
 /* --- MAIN CONTAINER --- */
 .container {
+  width: 90%; /* Changed from max-width to width for better mobile scaling */
   max-width: 900px;
-  margin: 40px auto;
-  padding: 40px 20px;
-  background: rgba(255, 255, 255, 0.4); /* Glass effect */
+  margin: 20px auto; /* Reduced from 40px */
+  padding: 30px 15px; /* Reduced padding so text isn't squished on small screens */
+  background: rgba(255, 255, 255, 0.4); 
   backdrop-filter: blur(8px);
   border-radius: 30px;
   box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
@@ -25,21 +24,21 @@ body {
 }
 
 h1 {
-  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-size: clamp(1.8rem, 8vw, 3.5rem); /* Scalable font size */
   color: #ff3f63;
   margin-bottom: 10px;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: #ff7a90;
   margin-bottom: 20px;
 }
 
 .question {
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #ff4d6d;
 }
 
@@ -47,29 +46,29 @@ h2 {
 .heart-btn, .answer-btn, .music-btn {
   background: #ff4d6d;
   color: white;
-  padding: 15px 35px;
-  font-size: 1.1rem;
+  padding: 12px 25px;
+  font-size: 1rem;
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  margin: 10px;
+  margin: 8px;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 6px 15px rgba(255, 77, 109, 0.3);
+  max-width: 100%; /* Prevents buttons from going off-screen */
 }
 
 .heart-btn:hover, .answer-btn:hover, .music-btn:hover {
   background: #e63956;
-  transform: scale(1.1) translateY(-3px);
-  box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4);
+  transform: scale(1.05) translateY(-2px);
 }
 
 /* --- LOVE METER --- */
 .love-meter {
-  width: 80%;
-  height: 24px;
+  width: 90%;
+  height: 20px;
   background: white;
   border-radius: 20px;
-  margin: 30px auto;
+  margin: 20px auto;
   overflow: hidden;
   border: 3px solid #ff8fab;
 }
@@ -86,22 +85,17 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 25px;
-  margin-top: 50px;
+  gap: 15px;
+  margin-top: 40px;
 }
 
 .polaroid {
-  width: 160px;
-  padding: 12px 12px 25px 12px;
+  width: 140px; /* Reduced from 160px for better fit on mobile */
+  padding: 10px 10px 20px 10px;
   background: white;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   transform: rotate(var(--rotation));
   transition: 0.3s;
-}
-
-.polaroid:hover {
-  transform: scale(1.1) rotate(0deg) !important;
-  z-index: 10;
 }
 
 .polaroid img {
@@ -114,8 +108,8 @@ h2 {
 .polaroid span {
   display: block;
   font-family: 'Patrick Hand', cursive;
-  font-size: 1.2rem;
-  margin-top: 10px;
+  font-size: 1.1rem;
+  margin-top: 8px;
   color: #ff4d6d;
 }
 
@@ -123,27 +117,28 @@ h2 {
 .side-img {
   position: fixed;
   top: 50%;
-  width: 120px;
+  width: 80px;
   opacity: 0.8;
   z-index: 1;
   pointer-events: none;
 }
-.left { left: -20px; transform: rotate(15deg); }
-.right { right: -20px; transform: rotate(-15deg); }
+.left { left: -10px; transform: rotate(15deg); }
+.right { right: -10px; transform: rotate(-15deg); }
 
 .quote {
   position: fixed;
   bottom: 20px;
   font-family: 'Patrick Hand', cursive;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #ff4d6d;
   background: white;
-  padding: 5px 15px;
+  padding: 5px 12px;
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  z-index: 5;
 }
-.left-quote { left: 20px; }
-.right-quote { right: 20px; }
+.left-quote { left: 10px; }
+.right-quote { right: 10px; }
 
 /* --- INTRO SCREEN --- */
 #intro {
@@ -154,41 +149,92 @@ h2 {
   justify-content: center;
   align-items: center;
   z-index: 100;
-  animation: fadeOut 1s ease forwards 9s; /* Adjust timing based on message length */
+  animation: fadeOut 1s ease forwards 9s;
 }
 
 .intro-text {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #ff4d6d;
   border-right: 3px solid #ff4d6d;
-  padding-right: 10px;
+  padding: 0 10px;
   animation: blink 0.7s infinite;
+  text-align: center;
 }
 
 @keyframes blink { 50% { border-color: transparent; } }
 @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-/* Heart Explosion */
+/* --- JAR & BUCKET LIST --- */
+.jar-icon {
+  font-size: 4rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.reason-text {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  color: #ff4d6d;
+  min-height: 60px;
+  padding: 15px;
+  background: white;
+  border-radius: 15px;
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+.list-items {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  display: inline-block;
+}
+.list-items li {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+}
+.list-items input[type="checkbox"] {
+  margin-right: 10px;
+  min-width: 18px;
+  min-height: 18px;
+}
+
+/* --- HEART EXPLOSION --- */
 .floating-heart {
   position: fixed;
-  font-size: 2rem;
+  font-size: 1.5rem;
   z-index: 999;
   pointer-events: none;
   animation: explode 1.2s ease-out forwards;
 }
-
 @keyframes explode {
   0% { transform: translate(0,0) scale(1); opacity: 1; }
   100% { transform: translate(var(--x), var(--y)) scale(0) rotate(360deg); opacity: 0; }
 }
 
-.final-msg {
-  animation: pulse 2s infinite;
-  margin-top: 20px;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+/* --- MOBILE SPECIFIC FIXES --- */
+@media (max-width: 600px) {
+  .side-img { display: none; } /* Clear clutter on small screens */
+  
+  .quote { 
+    position: relative; 
+    display: block; 
+    width: fit-content; 
+    margin: 10px auto; 
+    bottom: auto; left: auto; right: auto;
+  }
+  
+  .container { 
+    width: 92%; 
+    margin: 10px auto; 
+  }
+  
+  .polaroid { 
+    width: 125px; /* Fits two side-by-side on most phones */
+  }
+  
+  .answer-btn { 
+    width: 100%; /* Makes buttons full-width and easier to tap */
+    margin: 5px 0; 
+  }
 }
