@@ -99,9 +99,25 @@
   </style>
 </head>
 <body>
+
+<!-- TYPEWRITER INTRO -->
+<div id="intro">
+  <div class="intro-text" id="introText"></div>
+</div>
+
+
+  <link rel="stylesheet" href="styles.css">
+
+<img src="left-heart.png" class="side-img left">
+<img src="right-heart.png" class="side-img right">
+
+<div class="quote left-quote">“Mi amorcito Reina 💕”</div>
+<div class="quote right-quote">“Mi Corazonsito, Mi amorsito.”</div>
+
+
 <!-- Side images with bigger size using width attribute -->
-<img src="left-heart.png" alt="Left Heart" style="width:150px">
-<img src="right-heart.png" alt="Right Heart" style="width:150px">
+<img src="left-heart.png" alt="Left Heart" style="width:100px">
+<img src="right-heart.png" alt="Right Heart" style="width:100px">
 
   <audio id="bgMusic" src="si_somos_novios.mp3"></audio>
 
@@ -129,20 +145,31 @@
 
     const questions = [
       {
-        q: "Where did we meet?",
-        answers: ["The gym", "Three Brothers", "Applebee's"],
+        q: "What was the first thing I noticed about you?",
+        answers: ["Your eyes", "Your hair", "Your smile"],
         correct: 0
       },
       {
-        q: "What did I get you for our first Valentine's Day?",
-        answers: ["Necklace with our birthstones", "Weighted Bunny", "A Blanket"],
+        q: "What is the thing I love the most about you?",
+        answers: ["All Answers", "Your heart, personality, and humor", "Your beauty, sweetness, and love "],
         correct: 0
       },
       {
-        q: "Will you be my Valentine this year?",
+        q: "Do you realize you inspire me? ?",
         answers: ["Yes", "No"],
         correct: 0
-      }
+      },
+      {
+        q: "Do you know you make my heart full and warm?",
+        answers: ["Yes", "No"],
+        correct: 0
+      },
+      {
+        q: "Last question: Danna Cruz will you be my Valentine this year?",
+        answers: ["Yes", "No"],
+        correct: 0
+      },
+
     ];
 
     function playMusic() {
@@ -204,7 +231,7 @@
     }
 
     function increaseLoveMeter() {
-      loveProgress += 34;
+      loveProgress += 22.5;
       if (loveProgress > 100) loveProgress = 100;
       document.getElementById('loveFill').style.width = loveProgress + "%";
     }
@@ -232,5 +259,49 @@
       }
     }
   </script>
+
+  <div class="polaroid-gallery">
+  <div class="polaroid"><img src="img1.jpg"><span>Us 💕</span></div>
+  <div class="polaroid"><img src="img2.jpg"><span>My Love</span></div>
+  <div class="polaroid"><img src="img3.jpg"><span>Smile 🥺</span></div>
+  <div class="polaroid"><img src="img4.jpg"><span>Mi Amor</span></div>
+  <div class="polaroid"><img src="img5.jpg"><span>Cutie 💖</span></div>
+  <div class="polaroid"><img src="img6.jpg"><span>You ♥</span></div>
+</div>
+
+
+<script>
+  const message = [
+    "Hi Danna…",
+    "I made something special for you.",
+    "Because I can't be there with you in person, look. 💖"
+  ];
+
+  let i = 0;           
+  let j = 0;           
+  let speed = 50;      
+
+  function typeWriter() {
+    if (i < message.length) {
+      let currentLine = message[i];
+      document.getElementById("introText").innerHTML = currentLine.slice(0, j);
+
+      if (j < currentLine.length) {
+        j++;
+        setTimeout(typeWriter, speed);
+      } else {
+        j = 0;
+        i++;
+        setTimeout(typeWriter, 900); // Pause between lines
+      }
+    }
+  }
+
+  window.onload = () => {
+    typeWriter();
+  };
+</script>
+
+
 </body>
 </html>
