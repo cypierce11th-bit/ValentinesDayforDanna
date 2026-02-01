@@ -214,6 +214,49 @@ p, .question {
   100% { transform: translateY(0) rotate(var(--rotation)); }
 }
 
+/* --- TYPEWRITER INTRO SCREEN --- */
+#intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffe6ec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  animation: fadeOut 1s ease forwards;
+  animation-delay: 8s;
+}
+
+.intro-text {
+  font-size: 1.8rem;
+  max-width: 700px;
+  text-align: center;
+  padding: 20px;
+  color: #ff4d6d;
+  font-family: "Poppins", sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #ff4d6d;
+  animation: blinkCursor 0.7s infinite;
+}
+
+/* Typewriter effect */
+@keyframes blinkCursor {
+  0% { border-color: transparent; }
+  50% { border-color: #ff4d6d; }
+  100% { border-color: transparent; }
+}
+
+/* Fade-out animation for removing intro */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
 
 
 
