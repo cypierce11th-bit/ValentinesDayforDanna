@@ -14,8 +14,10 @@
       overflow-x: hidden;
     }
 
-    .container {
+     .container {
       padding: 60px 20px;
+      position: relative;
+      z-index: 2; /* Ensure content is above side images */
     }
 
     h1 {
@@ -76,6 +78,19 @@
       font-size: 2rem;
       animation: explode 1.2s ease-out forwards;
     }
+ /* New: Side images */
+    .side-image {
+      position: fixed;
+      top: 50%;
+      width: 80px;
+      transform: translateY(-50%);
+      z-index: 1; /* Behind main content */
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .side-image.left { left: 10px; }
+    .side-image.right { right: 10px; }
+
 
     @keyframes explode {
       0% { transform: translate(0,0) scale(1); opacity: 1; }
@@ -84,6 +99,9 @@
   </style>
 </head>
 <body>
+<!-- Side images with bigger size using width attribute -->
+<img src="left-heart.png" alt="Left Heart" style="width:150px">
+<img src="right-heart.png" alt="Right Heart" style="width:150px">
 
   <audio id="bgMusic" src="si_somos_novios.mp3"></audio>
 
