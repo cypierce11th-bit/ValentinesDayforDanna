@@ -238,3 +238,66 @@ h2 {
     margin: 5px 0; 
   }
 }
+
+/* --- BOTTOM STATS STYLING --- */
+.bottom-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
+
+.stat-box {
+  flex: 1;
+  min-width: 250px;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  border-radius: 20px;
+  border: 2px solid white;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.time-unit {
+  background: white;
+  padding: 8px;
+  border-radius: 10px;
+  min-width: 50px;
+}
+
+.time-unit span, .big-days span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff4d6d;
+  display: block;
+}
+
+.time-unit p, .big-days p {
+  font-size: 0.7rem;
+  margin: 0;
+  color: #888;
+}
+
+.big-days span {
+  font-size: 2.2rem;
+}
+
+.target-date {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #ff7a90;
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .bottom-stats { flex-direction: column; }
+}
+
+

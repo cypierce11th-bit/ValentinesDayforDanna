@@ -308,6 +308,28 @@
   </ul>
 </div>
 
+
+<div class="container bottom-stats">
+  <div class="stat-box">
+    <h3>Countdown to Reunion ✈️</h3>
+    <div id="reunion-timer" class="timer">
+      <div class="time-unit"><span id="r-days">00</span><p>Days</p></div>
+      <div class="time-unit"><span id="r-hours">00</span><p>Hrs</p></div>
+      <div class="time-unit"><span id="r-mins">00</span><p>Mins</p></div>
+    </div>
+    <p class="target-date">Target: May 1st, 2026</p>
+  </div>
+
+  <div class="stat-box">
+    <h3>Our Journey Together ❤️</h3>
+    <div class="big-days">
+      <span id="days-since">0</span>
+      <p>Beautiful Days</p>
+    </div>
+    <p class="target-date">Since October 14, 2023</p>
+  </div>
+</div>
+
 <script>
   let step = 0;
   let loveProgress = 0;
@@ -427,7 +449,38 @@
       document.querySelector('.jar-icon').style.transform = "rotate(0deg)";
     }, 300);
   }
+
+function updateStats() {
+    const now = new Date();
+    
+    // 1. REUNION COUNTDOWN (May 1st, 2026)
+    const reunionDate = new Date("May 1, 2026 00:00:00").getTime();
+    const gap = reunionDate - now.getTime();
+    
+    if (gap > 0) {
+      const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+      const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+      
+      document.getElementById("r-days").innerText = d.toString().padStart(2, '0');
+      document.getElementById("r-hours").innerText = h.toString().padStart(2, '0');
+      document.getElementById("r-mins").innerText = m.toString().padStart(2, '0');
+    }
+
+    // 2. DAYS SINCE (October 14, 2023)
+    const startDate = new Date("October 14, 2023");
+    const diffTime = Math.abs(now - startDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("days-since").innerText = diffDays;
+}
+
+// Update every minute
+setInterval(updateStats, 60000);
+updateStats(); // Initial call
+
 </script>
+
+
 
 </body>
 </html>
