@@ -419,3 +419,68 @@ h2 {
   font-size: 1.2rem;
   color: #ff4d6d;
 }
+
+
+body {
+  margin: 0; padding: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #ffe6ec 0%, #ffc1cf 100%);
+  background-attachment: fixed;
+  text-align: center; color: #444;
+}
+
+.container {
+  width: 90%; max-width: 800px;
+  margin: 20px auto; padding: 30px 15px;
+  background: rgba(255, 255, 255, 0.4); 
+  backdrop-filter: blur(8px);
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
+}
+
+h1 { color: #ff3f63; font-size: 2.5rem; }
+.heart-btn, .answer-btn, .music-btn {
+  background: #ff4d6d; color: white; padding: 12px 25px;
+  border: none; border-radius: 50px; cursor: pointer; margin: 5px;
+}
+
+/* GAME STYLES */
+#game-canvas {
+  width: 100%; height: 300px;
+  background: white; border-radius: 20px;
+  position: relative; overflow: hidden;
+  border: 3px dashed #ffb3c7;
+}
+#basket {
+  position: absolute; bottom: 10px; left: 50%;
+  font-size: 40px; transition: left 0.1s ease-out;
+}
+.falling-item { position: absolute; font-size: 25px; }
+#score { position: absolute; top: 10px; left: 10px; font-weight: bold; color: #ff4d6d; }
+#game-msg { 
+  position: absolute; top: 50%; width: 100%; 
+  font-family: 'Patrick Hand'; font-size: 1.5rem; color: #ff3f63; 
+}
+
+/* POLAROID */
+.polaroid-gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+.polaroid { width: 130px; padding: 10px; background: white; transform: rotate(var(--rotation)); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.polaroid img { width: 100%; }
+
+/* STATS */
+.cute-countdown { display: flex; justify-content: center; gap: 10px; }
+.time-unit { background: white; padding: 10px; border-radius: 15px; min-width: 60px; border: 2px solid #ffb3c7; }
+.cute-days { padding: 20px; border-radius: 50px; border: 3px dashed #ff8fab; display: inline-block; }
+.cute-days span { font-size: 2.5rem; color: #ff3f63; font-weight: bold; }
+
+/* LETTER */
+.star-rating { direction: rtl; font-size: 2rem; }
+.star { cursor: pointer; color: #ccc; }
+.letter-paper { background: white; padding: 20px; border-radius: 10px; margin: 20px auto; max-width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+#love-message { width: 100%; height: 150px; border: none; font-family: 'Patrick Hand'; font-size: 1.2rem; outline: none; resize: none; }
+
+/* INTRO */
+#intro { position: fixed; inset: 0; background: #ffe6ec; display: flex; justify-content: center; align-items: center; z-index: 100; animation: fadeOut 1s forwards 6s; }
+@keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+@media (max-width: 600px) { .container { width: 95%; } }
