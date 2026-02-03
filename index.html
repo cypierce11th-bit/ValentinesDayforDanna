@@ -77,24 +77,13 @@
   <div class="stat-box">
     <h3 class="stat-title">Countdown to Reunion ✈️</h3>
     <div id="reunion-timer" class="cute-countdown">
-      <div class="time-unit">
-        <span id="r-days">00</span>
-        <p>Days</p>
-      </div>
-      <div class="time-unit">
-        <span id="r-hours">00</span>
-        <p>Hrs</p>
-      </div>
-      <div class="time-unit">
-        <span id="r-mins">00</span>
-        <p>Mins</p>
-      </div>
+      <div class="time-unit"><span id="r-days">00</span><p>Days</p></div>
+      <div class="time-unit"><span id="r-hours">00</span><p>Hrs</p></div>
+      <div class="time-unit"><span id="r-mins">00</span><p>Mins</p></div>
     </div>
     <p class="target-date">Target: May 1st, 2026</p>
   </div>
-
   <hr class="soft-divider">
-
   <div class="stat-box">
     <h3 class="stat-title">Our Journey Together ❤️</h3>
     <div class="cute-days">
@@ -105,9 +94,30 @@
   </div>
 </div>
 
+<div class="container letter-section">
+  <h3>Write Me a Love Letter 💌</h3>
+  <p>How are we doing, my love?</p>
+  
+  <div class="star-rating">
+    <span class="star" onclick="setRating(5)">★</span>
+    <span class="star" onclick="setRating(4)">★</span>
+    <span class="star" onclick="setRating(3)">★</span>
+    <span class="star" onclick="setRating(2)">★</span>
+    <span class="star" onclick="setRating(1)">★</span>
+  </div>
+  <p id="rating-text">Rate our relationship ❤️</p>
+
+  <div class="letter-paper">
+    <textarea id="love-message" placeholder="Write your letter here, Reina..."></textarea>
+  </div>
+  
+  <button class="heart-btn" onclick="sendLetter()">Send My Letter 🕊️</button>
+</div>
+
 <script>
   let step = 0;
   let loveProgress = 0;
+  let currentRating = 0;
 
   const questions = [
     { q: "What was the first thing I noticed about you?", answers: ["Your eyes", "Your hair", "Your smile"], correct: 0 },
@@ -153,7 +163,6 @@
       feedback.innerHTML = "<span style='color:#ff4d6d'>💖 Correct! 💖</span>";
       increaseLoveMeter();
       explodeHearts(false);
-
       if (step === questions.length - 1) {
         setTimeout(() => {
           feedback.innerHTML = "<h2 class='final-msg'>I love you and miss you, Danna Cruz ❤️</h2>";
@@ -200,20 +209,8 @@
   }
   window.onload = typeWriter;
 
-  const reasons = [
-    "Your laugh—it's my favorite sound in the world.",
-    "How much you love the small things and your toys.",
-    "Your sudden excitement and those 'love attacks' you give.",
-    "Your smart, witty mind that always keeps me on my toes.",
-    "How incredibly passionate and caring you are.",
-    "That specific face you make when you want to be babied 🥺",
-    "How beautiful you look in your hair wrap.",
-    "How naturally gorgeous you are without a drop of makeup.",
-    "The focused look you get when you want to get blackheads out!",
-    "The pure joy on your face every time you see a cute dog."
-  ];
-
   function getNewReason() {
+    const reasons = ["Your laugh...", "Your love attacks...", "Your beauty...", "Your focused look...", "Your care..."]; // Simplified for example
     const reasonBox = document.getElementById('reason-display');
     const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
     reasonBox.style.opacity = 0;
@@ -225,28 +222,37 @@
     }, 300);
   }
 
+  // RATING & LETTER LOGIC
+  function setRating(val) {
+    currentRating = val;
+    const stars = document.querySelectorAll('.star');
+    stars.forEach((s, idx) => {
+      s.style.color = (5 - idx) <= val ? "#ff4d6d" : "#ccc";
+    });
+    document.getElementById('rating-text').innerText = val + " Stars - " + (val === 5 ? "Perfect! 😍" : "I love us! ❤️");
+  }
+
+  function sendLetter() {
+    const msg = document.getElementById('love-message').value;
+    const email = "cylandpierce777@gmail.com"; // CHANGE THIS TO YOUR EMAIL
+    const subject = encodeURIComponent("A Love Letter for You ❤️");
+    const body = encodeURIComponent("Rating: " + currentRating + "/5 Stars\n\nMessage:\n" + msg);
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  }
+
   function updateStats() {
     const now = new Date();
     const reunionDate = new Date("May 1, 2026 00:00:00").getTime();
     const gap = reunionDate - now.getTime();
-
     if (gap > 0) {
-      const d = Math.floor(gap / (1000 * 60 * 60 * 24));
-      const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
-
-      document.getElementById("r-days").innerText = d.toString().padStart(2, '0');
-      document.getElementById("r-hours").innerText = h.toString().padStart(2, '0');
-      document.getElementById("r-mins").innerText = m.toString().padStart(2, '0');
+      document.getElementById("r-days").innerText = Math.floor(gap / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+      document.getElementById("r-hours").innerText = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+      document.getElementById("r-mins").innerText = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
     }
-
-    const startDate = new Date("October 14, 2023");
-    const diffTime = now - startDate;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.floor((now - new Date("October 14, 2023")) / (1000 * 60 * 60 * 24));
     document.getElementById("days-since").innerText = diffDays;
   }
-
-  setInterval(updateStats, 1000); // Updated to 1s for better accuracy
+  setInterval(updateStats, 1000);
   updateStats();
 </script>
 </body>
