@@ -9,12 +9,42 @@ body {
   color: #444;
 }
 
-/* --- MAIN CONTAINER --- */
+/* Floating background hearts */
+body::before {
+  content: "💖";
+  font-size: 80px;
+  position: fixed;
+  top: -10%;
+  left: 10%;
+  opacity: 0.15;
+  animation: floatDown 12s linear infinite;
+}
+
+body::after {
+  content: "💗";
+  font-size: 70px;
+  position: fixed;
+  top: -20%;
+  right: 15%;
+  opacity: 0.18;
+  animation: floatDown2 14s linear infinite;
+}
+
+@keyframes floatDown {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(120vh); }
+}
+
+@keyframes floatDown2 {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(130vh) rotate(360deg); }
+}
+
 .container {
-  width: 90%; /* Changed from max-width to width for better mobile scaling */
+  width: 90%;
   max-width: 900px;
-  margin: 20px auto; /* Reduced from 40px */
-  padding: 30px 15px; /* Reduced padding so text isn't squished on small screens */
+  margin: 20px auto;
+  padding: 30px 15px;
   background: rgba(255, 255, 255, 0.4); 
   backdrop-filter: blur(8px);
   border-radius: 30px;
@@ -24,10 +54,9 @@ body {
 }
 
 h1 {
-  font-size: clamp(1.8rem, 8vw, 3.5rem); /* Scalable font size */
+  font-size: clamp(1.8rem, 8vw, 3.5rem);
   color: #ff3f63;
   margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
 }
 
 h2 {
@@ -54,7 +83,6 @@ h2 {
   margin: 8px;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 6px 15px rgba(255, 77, 109, 0.3);
-  max-width: 100%; /* Prevents buttons from going off-screen */
 }
 
 .heart-btn:hover, .answer-btn:hover, .music-btn:hover {
@@ -90,12 +118,17 @@ h2 {
 }
 
 .polaroid {
-  width: 140px; /* Reduced from 160px for better fit on mobile */
+  width: 140px;
   padding: 10px 10px 20px 10px;
   background: white;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   transform: rotate(var(--rotation));
   transition: 0.3s;
+}
+
+.polaroid:hover {
+  transform: scale(1.1) rotate(0deg) !important;
+  z-index: 10;
 }
 
 .polaroid img {
@@ -179,7 +212,7 @@ h2 {
   background: white;
   border-radius: 15px;
   width: 100%;
-  box-sizing: border-box; /* Ensures padding doesn't break width */
+  box-sizing: border-box;
 }
 .list-items {
   list-style: none;
@@ -212,10 +245,103 @@ h2 {
   100% { transform: translate(var(--x), var(--y)) scale(0) rotate(360deg); opacity: 0; }
 }
 
-/* --- MOBILE SPECIFIC FIXES --- */
+/* --- NEW CUTE STATS STYLING --- */
+.stats-container {
+  padding: 40px 20px;
+}
+
+.stat-title {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.8rem;
+  color: #ff4d6d;
+  margin-bottom: 15px;
+}
+
+.cute-countdown {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.cute-countdown .time-unit {
+  background: white;
+  border: 2px solid #ffb3c7;
+  border-radius: 20px;
+  padding: 10px;
+  min-width: 75px;
+  box-shadow: 0 4px 10px rgba(255, 120, 150, 0.1);
+  animation: miniFloat 3s ease-in-out infinite;
+}
+
+.cute-countdown .time-unit:nth-child(2) { animation-delay: 0.2s; }
+.cute-countdown .time-unit:nth-child(3) { animation-delay: 0.4s; }
+
+.cute-countdown .time-unit span {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff3f63;
+}
+
+.cute-countdown .time-unit p {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.9rem;
+  color: #ff7a90;
+  margin: 5px 0 0 0;
+}
+
+.cute-days {
+  background: linear-gradient(135deg, #fff5f7 0%, #ffe0e9 100%);
+  display: inline-block;
+  padding: 20px 40px;
+  border-radius: 50px;
+  border: 3px dashed #ff8fab;
+  margin: 10px 0;
+  animation: gentlePulse 2.5s ease-in-out infinite;
+}
+
+.cute-days span {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ff3f63;
+  display: block;
+}
+
+.cute-days p {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  color: #ff6f8b;
+  margin: 0;
+}
+
+.target-date, .since-date {
+  font-size: 0.85rem;
+  color: #aaa;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.soft-divider {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(255, 77, 109, 0), rgba(255, 77, 109, 0.3), rgba(255, 77, 109, 0));
+  margin: 30px 0;
+}
+
+@keyframes miniFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes gentlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+/* --- MOBILE FIXES --- */
 @media (max-width: 600px) {
-  .side-img { display: none; } /* Clear clutter on small screens */
-  
+  .side-img { display: none; }
   .quote { 
     position: relative; 
     display: block; 
@@ -223,81 +349,8 @@ h2 {
     margin: 10px auto; 
     bottom: auto; left: auto; right: auto;
   }
-  
-  .container { 
-    width: 92%; 
-    margin: 10px auto; 
-  }
-  
-  .polaroid { 
-    width: 125px; /* Fits two side-by-side on most phones */
-  }
-  
-  .answer-btn { 
-    width: 100%; /* Makes buttons full-width and easier to tap */
-    margin: 5px 0; 
-  }
+  .container { width: 92%; }
+  .polaroid { width: 125px; }
+  .answer-btn { width: 100%; }
+  .cute-countdown .time-unit { min-width: 65px; }
 }
-
-/* --- BOTTOM STATS STYLING --- */
-.bottom-stats {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 20px;
-  margin-top: 40px;
-  margin-bottom: 50px;
-}
-
-.stat-box {
-  flex: 1;
-  min-width: 250px;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 20px;
-  border-radius: 20px;
-  border: 2px solid white;
-}
-
-.timer {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 15px 0;
-}
-
-.time-unit {
-  background: white;
-  padding: 8px;
-  border-radius: 10px;
-  min-width: 50px;
-}
-
-.time-unit span, .big-days span {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ff4d6d;
-  display: block;
-}
-
-.time-unit p, .big-days p {
-  font-size: 0.7rem;
-  margin: 0;
-  color: #888;
-}
-
-.big-days span {
-  font-size: 2.2rem;
-}
-
-.target-date {
-  font-size: 0.9rem;
-  font-style: italic;
-  color: #ff7a90;
-  margin-top: 10px;
-}
-
-@media (max-width: 600px) {
-  .bottom-stats { flex-direction: column; }
-}
-
-
